@@ -4,6 +4,6 @@
 
 <style>
     main {
-        padding: 50px 20px;
+        padding: 100px 50px;
     }
 </style>
