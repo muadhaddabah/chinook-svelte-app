@@ -16,8 +16,9 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <td>ArtistId</td>
-            <td>Name</td>
+            <th>ArtistId</th>
+            <th>Name</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
