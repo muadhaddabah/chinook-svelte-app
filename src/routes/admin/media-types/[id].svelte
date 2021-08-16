@@ -41,7 +41,7 @@
 
     const getUpdatedMedia_type = async () => {
         const res = await fetch(
-            `${API_URL}/media_types/${media_type.MediaTypeId}`
+            `${API_URL}/media-types/${media_type.MediaTypeId}`
         );
         const json = await res.json();
         media_type = json.data;
@@ -109,5 +109,5 @@
         <label for="nameInputField">Name</label>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
-    <a class="btn btn-dark" href={`/admin/media_types`}>Back</a>
+    <a class="btn btn-dark" href={`/admin/media-types`}>Back</a>
 </form>

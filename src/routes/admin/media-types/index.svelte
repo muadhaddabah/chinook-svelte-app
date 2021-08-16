@@ -47,7 +47,7 @@
                 <td>{media_type.Name}</td>
                 <td
                     ><a
-                        href={`/admin/media_types/${media_type.MediaTypeId}`}
+                        href={`/admin/media-types/${media_type.MediaTypeId}`}
                         class="btn btn-primary">Details</a
                     >
                     <button

@@ -66,16 +66,14 @@
         data.BillingAddress.length == 0 || !data.BillingAddress.length;
     $: billingCityIsValid =
         data.BillingCity.length == 0 || !data.BillingCity.length;
-
-    // cannot read 'length'
-    // $: billingStateIsValid =
-    //     data.BillingState.length == 0 || !data.BillingState.length;
+    $: billingStateIsValid =
+        data.BillingState.length == 0 || !data.BillingState.length;
     $: billingCountryIsValid =
         data.BillingCountry.length == 0 || !data.BillingCountry.length;
-
     $: billingPostalCodeIsValid =
         data.BillingPostalCode.length == 0 || !data.BillingPostalCode.length;
-    $: totalIsValid = data.Total.length == 0 || !data.Total.length;
+    $: totalIsValid = data.Total == 0 || !data.Total;
+    $: console.log(data.Total.length);
 
     const getUpdatedInvoice = async () => {
         const res = await fetch(`${API_URL}/invoices/${invoice.InvoiceId}`);
@@ -118,118 +116,125 @@
 
 <h1>{invoice.InvoiceId}</h1>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <td>InvoiceId</td>
-            <td>CustomerId</td>
-            <td>InvoiceDate</td>
-            <td>BillingAddress</td>
-            <td>BillingCity</td>
-            <td>BillingState</td>
-            <td>BillingCountry</td>
-            <td>BillingPostalCode</td>
-            <td>Total</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>{invoice.InvoiceId}</td>
-            <td>{invoice.CustomerId}</td>
-            <td>{invoice.InvoiceDate}</td>
-            <td>{invoice.BillingAddress}</td>
-            <td>{invoice.BillingCity}</td>
-            <td>{invoice.BillingState}</td>
-            <td>{invoice.BillingCountry}</td>
-            <td>{invoice.BillingPostalCode}</td>
-            <td>{invoice.Total}</td>
-        </tr>
-    </tbody>
-</table>
+<!-- {JSON.stringify(invoice, null, 2)} -->
 
-<form class="form-floating" on:submit|preventDefault={handleSubmit}>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.InvoiceDate}
-            type="text"
-            class="form-control"
-            class:is-invalid={invoiceDateIsValid}
-            id="InvoiceDateInputField"
-        />
-        <label for="InvoiceDateInputField">Invoice Date</label>
-    </div>
-</form>
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button
+            class="nav-link active"
+            id="edit-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#edit"
+            type="button"
+            role="tab"
+            aria-controls="edit"
+            aria-selected="true">Edit</button
+        >
+    </li>
+    <li class="nav-item" role="presentation">
+        <button
+            class="nav-link"
+            id="invoice-items-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#invoice-items"
+            type="button"
+            role="tab"
+            aria-controls="invoice-items"
+            aria-selected="false">Invoice Items</button
+        >
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div
+        class="tab-pane fade show active p-5"
+        id="edit"
+        role="tabpanel"
+        aria-labelledby="edit-tab"
+    >
+        <form class="form-floating" on:submit|preventDefault={handleSubmit}>
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.InvoiceDate}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={invoiceDateIsValid}
+                    id="InvoiceDateInputField"
+                />
+                <label for="InvoiceDateInputField">Invoice Date</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.BillingAddress}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={billingAddressIsValid}
+                    id="BillingAddressInputField"
+                />
+                <label for="BillingAddressInputField">Billing Address</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.BillingCity}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={billingCityIsValid}
+                    id="BillingCityInputField"
+                />
+                <label for="BillingCityInputField">Billing City</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.BillingState}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={billingStateIsValid}
+                    id="BillingStateInputField"
+                />
+                <label for="BillingStateInputField">Billing State</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.BillingCountry}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={billingCountryIsValid}
+                    id="BillingCountryInputField"
+                />
+                <label for="BillingCountryInputField">Billing Country</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.BillingPostalCode}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={billingPostalCodeIsValid}
+                    id="BillingPostalCodeInputField"
+                />
+                <label for="BillingPostalCodeInputField"
+                    >Billing PostalCode</label
+                >
+            </div>
 
-<form class="form-floating" on:submit|preventDefault={handleSubmit}>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.BillingAddress}
-            type="text"
-            class="form-control"
-            class:is-invalid={billingAddressIsValid}
-            id="BillingAddressInputField"
-        />
-        <label for="BillingAddressInputField">Billing Address</label>
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.Total}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={totalIsValid}
+                    id="TotalInputField"
+                />
+                <label for="TotalInputField">Total</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a class="btn btn-dark" href={`/admin/artists`}>Back</a>
+        </form>
     </div>
-</form>
-<form class="form-floating" on:submit|preventDefault={handleSubmit}>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.BillingCity}
-            type="text"
-            class="form-control"
-            class:is-invalid={billingCityIsValid}
-            id="BillingCityInputField"
-        />
-        <label for="BillingCityInputField">Billing City</label>
+    <div
+        class="tab-pane fade"
+        id="invoice-items"
+        role="tabpanel"
+        aria-labelledby="invoice-items-tab"
+    >
+        ...
     </div>
-</form>
-<form class="form-floating" on:submit|preventDefault={handleSubmit}>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.BillingState}
-            type="text"
-            class="form-control"
-            id="BillingStateInputField"
-        />
-        <label for="BillingStateInputField">Billing State</label>
-    </div>
-</form>
-<form class="form-floating" on:submit|preventDefault={handleSubmit}>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.BillingCountry}
-            type="text"
-            class="form-control"
-            class:is-invalid={billingCountryIsValid}
-            id="BillingCountryInputField"
-        />
-        <label for="BillingCountryInputField">Billing Country</label>
-    </div>
-</form>
-<form class="form-floating" on:submit|preventDefault={handleSubmit}>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.BillingPostalCode}
-            type="text"
-            class="form-control"
-            class:is-invalid={billingPostalCodeIsValid}
-            id="BillingPostalCodeInputField"
-        />
-        <label for="BillingPostalCodeInputField">Billing PostalCode</label>
-    </div>
-</form>
-<form class="form-floating" on:submit|preventDefault={handleSubmit}>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.Total}
-            type="text"
-            class="form-control"
-            class:is-invalid={totalIsValid}
-            id="TotalInputField"
-        />
-        <label for="TotalInputField">Total</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <a class="btn btn-dark" href={`/admin/artists`}>Back</a>
-</form>
+</div>

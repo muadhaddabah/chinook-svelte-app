@@ -37,7 +37,7 @@
     let errors = { Name: [] };
 
     $: nameIsValid = data.Name.length == 0 || !data.Name.length;
-
+    $: saveIsVisible = true;
     const getUpdatedArtist = async () => {
         const res = await fetch(`${API_URL}/artists/${artist.ArtistId}`);
         const json = await res.json();
@@ -72,22 +72,28 @@
             );
         }
     };
+
+    const handleChange = async (event, artistName) => {
+        console.log(
+            "🚀 ~ file: [id].svelte ~ line 77 ~ handleChange ~ event",
+            event.target.innerText
+        );
+
+        data.Name = event.target.innerText;
+        saveIsVisible = !(event.target.innerText != artistName);
+    };
 </script>
 
-<h1>{artist.Name}</h1>
-
-<form class="form-floating" on:submit|preventDefault={handleSubmit}>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.Name}
-            type="text"
-            class="form-control"
-            class:is-invalid={nameIsValid}
-            id="nameInputField"
-            placeholder="john doe"
-        />
-        <label for="nameInputField">Name</label>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <a class="btn btn-dark" href={`/admin/artists`}>Back</a>
-</form>
+<h1>
+    <span
+        contenteditable
+        on:input={(event) => handleChange(event, artist.Name)}
+    >
+        {artist.Name}
+    </span>
+    <button
+        class="btn btn-primary float-right "
+        class:invisible={saveIsVisible}
+        on:click|preventDefault={handleSubmit}>Save</button
+    >
+</h1>

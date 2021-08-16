@@ -38,10 +38,10 @@
 
     let errors = { UnitPrice: [], Quantity: [] };
 
-    $: unitPriceIsValid = data.UnitPrice.length == 0 || !data.UnitPrice.length;
-    $: quantityIsValid = data.Quantity.length == 0 || !data.Quantity.length;
+    $: unitPriceIsValid = data.UnitPrice == 0 || !data.UnitPrice;
+    $: quantityIsValid = data.Quantity == 0 || !data.Quantity;
 
-    const getUpdatedInvoice_item = async () => {
+    const getUpdatedInvoiceItem = async () => {
         const res = await fetch(
             `${API_URL}/invoice_items/${invoice_item.InvoiceLineId}`
         );
@@ -60,14 +60,14 @@
                 }
             );
             console.log(
-                "🚀 ~ file: [id].svelte ~ line 53 ~ constgetUpdatedInvoice_item= ~ res",
+                "🚀 ~ file: [id].svelte ~ line 53 ~ constgetUpdatedInvoiceItem= ~ res",
                 res
             );
 
             const json = await res.json();
 
             if (res.status == 200) {
-                await getUpdatedInvoice_item();
+                await getUpdatedInvoiceItem();
             }
 
             if (res.status == 422) {
@@ -75,7 +75,7 @@
             }
         } catch (error) {
             console.log(
-                "🚀 ~ file: [id].svelte ~ line 69 ~ constgetUpdatedInvoice_item= ~ error",
+                "🚀 ~ file: [id].svelte ~ line 69 ~ constgetUpdatedInvoiceItem= ~ error",
                 error
             );
         }
@@ -115,9 +115,6 @@
         />
         <label for="UnitPriceInputField">UnitPrice</label>
     </div>
-</form>
-
-<form class="form-floating" on:submit|preventDefault={handleSubmit}>
     <div class="form-floating mb-3">
         <input
             bind:value={data.Quantity}
@@ -128,5 +125,5 @@
         <label for="QuantityInputField">Quantity</label>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
-    <a class="btn btn-dark" href={`/admin/invoice_items`}>Back</a>
+    <a class="btn btn-dark" href={`/admin/invoice-items`}>Back</a>
 </form>

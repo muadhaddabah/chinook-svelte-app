@@ -42,6 +42,7 @@
             <td>BillingCountry</td>
             <td>BillingPostalCode</td>
             <td>Total</td>
+            <td>Actions</td>
         </tr>
     </thead>
     <tbody>

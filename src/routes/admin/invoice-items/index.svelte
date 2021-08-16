@@ -24,6 +24,7 @@
             <td>TrackId</td>
             <td>UnitPrice</td>
             <td>Quantity</td>
+            <td>Actions</td>
         </tr>
     </thead>
     <tbody>
