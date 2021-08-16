@@ -8,6 +8,26 @@
         const json = await res.json();
         albums = json.data;
     };
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await fetch(`${API_URL}/albums/${id}`, {
+                method: "DELETE",
+            });
+
+            if (res.status == 200) {
+                await getAlbums();
+            }
+            if (res.status == 419) {
+                alert("Record can't be deleted");
+            }
+        } catch (error) {
+            console.log(
+                "🚀 ~ file: index.svelte ~ line 26 ~ cosnthandleDelete ~ error",
+                error
+            );
+        }
+    };
     onMount(getAlbums);
 </script>
 
@@ -18,6 +38,7 @@
             <td>AlbumId</td>
             <td>Title</td>
             <td>ArtistId</td>
+            <td>Actions</td>
         </tr>
     </thead>
     <tbody>
@@ -30,8 +51,13 @@
                     ><a
                         href={`/admin/albums/${album.AlbumId}`}
                         class="btn btn-primary">Details</a
-                    ></td
-                >
+                    >
+                    <button
+                        class="btn btn-danger"
+                        on:click={() => handleDelete(album.AlbumId)}
+                        >Delete</button
+                    >
+                </td>
             </tr>
         {/each}
     </tbody>

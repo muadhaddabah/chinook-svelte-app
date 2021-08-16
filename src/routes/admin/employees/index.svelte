@@ -12,6 +12,25 @@
             employees
         );
     };
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await fetch(`${API_URL}/employees/${id}`, {
+                method: "DELETE",
+            });
+            if (res.status == 200) {
+                await getEmployees();
+            }
+            if (res.status == 419) {
+                alert("Employee can't be deleted");
+            }
+        } catch (error) {
+            console.log(
+                "🚀 ~ file: index.svelte ~ line 29 ~ handleDelete ~ error",
+                error
+            );
+        }
+    };
     onMount(getEmployees);
 </script>
 
@@ -59,8 +78,13 @@
                     ><a
                         href={`/admin/employees/${employee.EmployeeId}`}
                         class="btn btn-primary">Details</a
-                    ></td
-                >
+                    >
+                    <button
+                        class="btn btn-danger"
+                        on:click={() => handleDelete(employee.EmployeeId)}
+                        >Delete</button
+                    >
+                </td>
             </tr>
         {/each}
     </tbody>

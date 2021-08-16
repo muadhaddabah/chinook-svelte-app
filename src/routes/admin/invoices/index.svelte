@@ -7,6 +7,25 @@
         const json = await res.json();
         invoices = json.data;
     };
+
+    const handleDelete = async (id) => {
+        try {
+            const res = await fetch(`${API_URL}/invoices/${id}`, {
+                method: "DELETE",
+            });
+            if (res.status == 200) {
+                await getInvoices();
+            }
+            if (res.status == 419) {
+                alert("Record Can't be deleted");
+            }
+        } catch (error) {
+            console.log(
+                "🚀 ~ file: index.svelte ~ line 23 ~ handleDelete ~ error",
+                error
+            );
+        }
+    };
     onMount(getInvoices);
 </script>
 
@@ -41,8 +60,13 @@
                     ><a
                         href={`/admin/invoices/${invoice.InvoiceId}`}
                         class="btn btn-primary">Details</a
-                    ></td
-                >
+                    >
+                    <button
+                        class="btn btn-danger"
+                        on:click={() => handleDelete(invoice.InvoiceId)}
+                        >Delete</button
+                    >
+                </td>
             </tr>
         {/each}
     </tbody>
