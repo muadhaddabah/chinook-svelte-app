@@ -26,10 +26,7 @@
             label: "Genres",
             href: "/admin/genres",
         },
-        {
-            label: "Invoice-Items",
-            href: "/admin/invoice-items",
-        },
+
         {
             label: "Invoices",
             href: "/admin/invoices",
@@ -52,7 +49,7 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Carousel</a>
+            <a class="navbar-brand" href="/">Carousel</a>
             <button
                 class="navbar-toggler"
                 type="button"

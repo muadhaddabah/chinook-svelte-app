@@ -221,7 +221,7 @@
                     type="text"
                     class="form-control"
                     class:is-invalid={totalIsValid}
-                    id="TotalInputField"
+                    id="TolInputField"
                 />
                 <label for="TotalInputField">Total</label>
             </div>

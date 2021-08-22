@@ -34,14 +34,14 @@
     <thead>
         <tr>
             <td>TrackId</td>
-            <td>Name</td>
-            <td>AlbumId</td>
-            <td>MediaTypeId</td>
-            <td>GenreId</td>
+            <td>Track</td>
+            <td>Album</td>
+            <td>Artist</td>
             <td>Composer</td>
             <td>Milliseconds</td>
             <td>Bytes</td>
             <td>UnitPrice</td>
+            <td>Actions</td>
         </tr>
     </thead>
     <tbody>
@@ -49,9 +49,8 @@
             <tr>
                 <td>{track.TrackId}</td>
                 <td>{track.Name}</td>
-                <td>{track.AlbumId}</td>
-                <td>{track.MediaTypeId}</td>
-                <td>{track.GenreId}</td>
+                <td>{track.Album.Title}</td>
+                <td>{track.Artist.Name}</td>
                 <td>{track.Composer}</td>
                 <td>{track.Milliseconds}</td>
                 <td>{track.Bytes}</td>
