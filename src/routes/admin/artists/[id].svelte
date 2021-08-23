@@ -85,8 +85,6 @@
     };
 </script>
 
-<h1>{artist.Name}</h1>
-
 <h1>
     <span
         contenteditable
@@ -135,22 +133,25 @@
         role="tabpanel"
         aria-labelledby="edit-tab"
     >
-        <div class="card text-center" style="width: 18rem;">
-            <div class="card-body">
-                <span>
-                    <input
-                        value={data.Title}
-                        class="card-title"
-                        id="albumTitle"
-                    />{data.Title}
-                </span>
-                <ul class="card-text">
-                    <li>
-                        With supporting text below as a natural lead-in to
-                        additional content.
-                    </li>
-                </ul>
-            </div>
+        <div class="row gy-5">
+            {#each artist.Albums as album (`${album.AlbumId}_${album.Title}`)}
+                <div class="col">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {album.Title}
+                            </h5>
+                            <ul class="list-group list-group-flush">
+                                {#each album.Tracks as track (`${track.AlbumId}_${track.TrackId}`)}
+                                    <li class="list-group-item">
+                                        {track.Name}
+                                    </li>
+                                {/each}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {/each}
         </div>
     </div>
     <div
@@ -160,15 +161,5 @@
         aria-labelledby="invoice-items-tab"
     >
         ...
-    </div>
-</div>
-
-<div class="card text-center" style="width: 18rem;">
-    <div class="card-body">
-        <input bind:value={data.Title} class="card-title" />
-        <p class="card-text">
-            With supporting text below as a natural lead-in to additional
-            content.
-        </p>
     </div>
 </div>

@@ -79,7 +79,7 @@
     </nav>
 </header>
 
-<main>
+<main class="container">
     <slot />
 </main>
 
