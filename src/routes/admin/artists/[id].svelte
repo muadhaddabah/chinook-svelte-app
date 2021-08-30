@@ -32,6 +32,11 @@
 <script>
     export let artist;
     let data = { Name: artist.Name };
+    let albumCount = artist.Albums.length || 0;
+    let trackCount = artist.Albums.reduce(
+        (prev, curr) => prev + curr.Tracks.length,
+        0
+    );
 
     // $: console.log("🚀 ~ file: [id].svelte ~ line 40 ~ data2", data2);
     $: console.log("🚀 ~ file: [id].svelte ~ line 31 ~ data", data);
@@ -100,6 +105,33 @@
     >
 </h1>
 
+<div class="row">
+    <div class="col-xl-3 col-md-6">
+        <div class="widget widget-stats bg-blue">
+            <div class="stats-info">
+                <h4>ALBUMS</h4>
+                <h5>{albumCount}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="widget widget-stats bg-blue">
+            <div class="stats-info">
+                <h4>TRACKS</h4>
+                <h5>{trackCount}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-md-6">
+        <div class="widget widget-stats bg-blue">
+            <div class="stats-info">
+                <h4>TOTAL SALES</h4>
+                <h5>$16.53</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
 <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" role="presentation">
         <button
@@ -110,12 +142,12 @@
             type="button"
             role="tab"
             aria-controls="edit"
-            aria-selected="true">View</button
+            aria-selected="true">Albums</button
         >
     </li>
     <li class="nav-item" role="presentation">
         <button
-            class="nav-link"
+            class="nav-link "
             id="invoice-items-tab"
             data-bs-toggle="tab"
             data-bs-target="#invoice-items"
@@ -163,3 +195,22 @@
         ...
     </div>
 </div>
+
+<style>
+    .widget.widget-stats {
+        position: relative;
+        color: #fff;
+        padding: 0.9375rem;
+        border-radius: 4px;
+    }
+    .widget {
+        overflow: hidden;
+        margin-bottom: 20px;
+        background: #fff;
+        color: inherit;
+        padding: 0;
+    }
+    .bg-blue {
+        background-color: #348fe2 !important;
+    }
+</style>

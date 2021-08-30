@@ -33,13 +33,10 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <td>TrackId</td>
             <td>Track</td>
             <td>Album</td>
             <td>Artist</td>
             <td>Composer</td>
-            <td>Milliseconds</td>
-            <td>Bytes</td>
             <td>UnitPrice</td>
             <td>Actions</td>
         </tr>
@@ -47,13 +44,10 @@
     <tbody>
         {#each tracks as track (track.TrackId)}
             <tr>
-                <td>{track.TrackId}</td>
                 <td>{track.Name}</td>
                 <td>{track.Album.Title}</td>
                 <td>{track.Artist.Name}</td>
                 <td>{track.Composer}</td>
-                <td>{track.Milliseconds}</td>
-                <td>{track.Bytes}</td>
                 <td>{track.UnitPrice}</td>
                 <td
                     ><a

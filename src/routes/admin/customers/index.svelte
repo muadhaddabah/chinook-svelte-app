@@ -19,15 +19,15 @@
             <td>First Name</td>
             <td>Last Name</td>
             <td>Company</td>
-            <td>Address</td>
-            <td>City</td>
+            <!-- <td>Address</td> -->
+            <!-- <td>City</td> -->
             <td>State</td>
             <td>Country</td>
-            <td>PostalCode</td>
+            <!-- <td>PostalCode</td> -->
             <td>Phone</td>
             <td>Fax</td>
             <td>Email</td>
-            <td>SupportRepId</td>
+            <!-- <td>SupportRepId</td> -->
             <td>Actions</td>
         </tr>
     </thead>
@@ -38,15 +38,15 @@
                 <td>{customer.FirstName}</td>
                 <td>{customer.LastName}</td>
                 <td>{customer.Company}</td>
-                <td>{customer.Address}</td>
-                <td>{customer.City}</td>
+                <!-- <td>{customer.Address}</td> -->
+                <!-- <td>{customer.City}</td> -->
                 <td>{customer.State}</td>
                 <td>{customer.Country}</td>
-                <td>{customer.PostalCode}</td>
+                <!-- <td>{customer.PostalCode}</td> -->
                 <td>{customer.Phone}</td>
                 <td>{customer.Fax}</td>
                 <td>{customer.Email}</td>
-                <td>{customer.SupportRepId}</td>
+                <!-- <td>{customer.SupportRepId}</td> -->
                 <td
                     ><a
                         href={`/admin/customers/${customer.CustomerId}`}

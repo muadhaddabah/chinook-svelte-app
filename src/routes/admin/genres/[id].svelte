@@ -76,9 +76,9 @@
     };
 </script>
 
-<h1>{genre.GenreId} {genre.Name}</h1>
+<h1>{genre.Name}</h1>
 
-<form class="form-floating" on:submit|preventDefault={handleSubmit}>
+<form class="form-floating mb-5" on:submit|preventDefault={handleSubmit}>
     <div class="form-floating mb-3">
         <input
             bind:value={data.Name}
@@ -93,3 +93,80 @@
     <button type="submit" class="btn btn-primary">Submit</button>
     <a class="btn btn-dark" href={`/admin/genres`}>Back</a>
 </form>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button
+            class="nav-link active"
+            id="edit-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#edit"
+            type="button"
+            role="tab"
+            aria-controls="edit"
+            aria-selected="true">Albums</button
+        >
+    </li>
+    <li class="nav-item" role="presentation">
+        <button
+            class="nav-link "
+            id="invoice-items-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#invoice-items"
+            type="button"
+            role="tab"
+            aria-controls="invoice-items"
+            aria-selected="false">Tracks</button
+        >
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div
+        class="tab-pane fade show active p-5"
+        id="edit"
+        role="tabpanel"
+        aria-labelledby="edit-tab"
+    >
+        <h1>Display Rock Albums</h1>
+        <div class="row gy-5">
+            <div class="col">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="border-bottom my-2">Balls To The Wall</h5>
+                        <h5 class="border-bottom my-2">Fast As a Shark</h5>
+                        <h5 class="border-bottom my-2">Restless and Wild</h5>
+                        <h5 class="border-bottom my-2">Princess of the Dawn</h5>
+                        <h5 class="border-bottom my-2">Let's Get It Up</h5>
+                        <h5 class="my-2">Put The Finger On You</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div
+        class="tab-pane fade p-5"
+        id="invoice-items"
+        role="tabpanel"
+        aria-labelledby="invoice-items-tab"
+    >
+        <h1>Display Rock Tracks</h1>
+        <div class="row gy-5">
+            <div class="col">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="border-bottom my-2">
+                            I Was Made For Lovin You
+                        </h5>
+                        <h5 class="border-bottom my-2">Rock Song</h5>
+                        <h5 class="border-bottom my-2">No One Like You</h5>
+                        <h5 class="border-bottom my-2">Livin On a Prayer</h5>
+                        <h5 class="border-bottom my-2">
+                            Rock You Like a Hurricane
+                        </h5>
+                        <h5 class="my-2">Put The Finger On You</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

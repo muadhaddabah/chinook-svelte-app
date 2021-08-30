@@ -10,12 +10,13 @@
             };
         }
 
-        const url = `${API_URL}/media_types/${page.params.id}`;
+        const url = `${API_URL}/media_types/${page.params.id}/trac`;
         const res = await fetch(url);
 
         if (res.ok) {
             const json = await res.json();
 
+            console.log(json);
             return {
                 props: {
                     media_type: json.data,
@@ -82,7 +83,7 @@
 
 <h1>{media_type.MediaTypeId} {media_type.Name}</h1>
 
-<table class="table table-striped">
+<!-- <table class="table table-striped">
     <thead>
         <tr>
             <td>MediaTypeId</td>
@@ -95,7 +96,7 @@
             <td>{media_type.Name}</td>
         </tr>
     </tbody>
-</table>
+</table> -->
 
 <form class="form-floating" on:submit|preventDefault={handleSubmit}>
     <div class="form-floating mb-3">
@@ -108,6 +109,100 @@
         />
         <label for="nameInputField">Name</label>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary ">Submit</button>
     <a class="btn btn-dark" href={`/admin/media-types`}>Back</a>
 </form>
+
+<ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button
+            class="nav-link active"
+            id="edit-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#edit"
+            type="button"
+            role="tab"
+            aria-controls="edit"
+            aria-selected="true">Tracks</button
+        >
+    </li>
+    <li class="nav-item" role="presentation">
+        <button
+            class="nav-link "
+            id="invoice-items-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#invoice-items"
+            type="button"
+            role="tab"
+            aria-controls="invoice-items"
+            aria-selected="false">Other</button
+        >
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div
+        class="tab-pane fade show active p-5"
+        id="edit"
+        role="tabpanel"
+        aria-labelledby="edit-tab"
+    >
+        <h1>Display {media_type.Name} Tracks</h1>
+        <!-- {JSON.stringify(media_type, null, 2)} -->
+        <!-- start -->
+        <div class="row gy-5">
+            <ul class="list-group list-group-flush">
+                {#each media_type.tracks as track (`${track.TrackId}_${track.Name}`)}
+                    <li class="list-group-item">
+                        {track.Name}
+                    </li>
+                {/each}
+            </ul>
+        </div>
+        <!-- end -->
+        <div class="row gy-5">
+            <div class="col">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="border-bottom my-2">
+                            I Was Made For Lovin You
+                        </h5>
+                        <h5 class="border-bottom my-2">Rock Song</h5>
+                        <h5 class="border-bottom my-2">No One Like You</h5>
+                        <h5 class="border-bottom my-2">Livin On a Prayer</h5>
+                        <h5 class="border-bottom my-2">
+                            Rock You Like a Hurricane
+                        </h5>
+                        <h5 class="my-2">Put The Finger On You</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div
+        class="tab-pane fade p-5"
+        id="invoice-items"
+        role="tabpanel"
+        aria-labelledby="invoice-items-tab"
+    >
+        <h1>How</h1>
+        <div class="row gy-5">
+            ...
+            <!-- <div class="col">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="border-bottom my-2">
+                            I Was Made For Lovin You
+                        </h5>
+                        <h5 class="border-bottom my-2">Rock Song</h5>
+                        <h5 class="border-bottom my-2">No One Like You</h5>
+                        <h5 class="border-bottom my-2">Livin On a Prayer</h5>
+                        <h5 class="border-bottom my-2">
+                            Rock You Like a Hurricane
+                        </h5>
+                        <h5 class="my-2">Put The Finger On You</h5>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>

@@ -22,7 +22,7 @@
             };
         }
 
-        const url = `${API_URL}/customers/${page.params.id}`;
+        const url = `${API_URL}/customers/${page.params.id}/history`;
         const res = await fetch(url);
 
         if (res.ok) {
@@ -44,17 +44,17 @@
     export let customer;
 
     let data = {
-        FirstName: customer.FirstName,
-        LastName: customer.LastName,
-        Company: customer.Company,
-        Address: customer.Address,
-        City: customer.City,
-        State: customer.State,
-        Country: customer.Country,
-        PostalCode: customer.PostalCode,
-        Phone: customer.Phone,
-        Fax: customer.Fax,
-        Email: customer.Email,
+        FirstName: customer.FirstName || "",
+        LastName: customer.LastName || "",
+        Company: customer.Company || "",
+        Address: customer.Address || "",
+        City: customer.City || "",
+        State: customer.State || "",
+        Country: customer.Country || "",
+        PostalCode: customer.PostalCode || "",
+        Phone: customer.Phone || "",
+        Fax: customer.Fax || "",
+        Email: customer.Email || "",
     };
     $: console.log("🚀 ~ file: [id].svelte ~ line 59 ~ data", data);
 
@@ -130,112 +130,247 @@
     {customer.LastName}
 </h1>
 
-<form class="form-floating" on:submit|preventDefault={handleSubmit}>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.FirstName}
-            type="text"
-            class="form-control"
-            class:is-invalid={firstNameIsValid}
-            id="firstNameInputField"
-            placeholder="John"
-        />
-        <label for="nameInputField">First Name</label>
+<!-- bluecard -->
+<div class="row">
+    <div class="col-xl-3 col-md-6">
+        <div class="widget widget-stats bg-blue">
+            <div class="stats-info">
+                <h4>Company</h4>
+                <strong>{customer.Company}</strong><br />
+                <strong>Email: {customer.Email}</strong>
+            </div>
+        </div>
     </div>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.LastName}
-            type="text"
-            class="form-control"
-            class:is-invalid={lastNameIsValid}
-            id="LastNameInputField"
-            placeholder="doe"
-        />
-        <label for="nameInputField">Last Name</label>
+    <div class="col-xl-3 col-md-6">
+        <div class="widget widget-stats bg-blue">
+            <div class="stats-info">
+                <h4>Phone</h4>
+                <h5>{customer.Phone}</h5>
+                <h5>Fax:{customer.Fax}</h5>
+            </div>
+        </div>
     </div>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.Company}
-            type="text"
-            class="form-control"
-            class:is-invalid={companyIsValid}
-        />
-        <label for="nameInputField">Company</label>
+    <div class="col-xl-3 col-md-6">
+        <div class="widget widget-stats bg-blue">
+            <div class="stats-info">
+                <h4>TOTAL SPENT</h4>
+                <h5>$16.83</h5>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.Address}
-            type="text"
-            class="form-control"
-            class:is-invalid={addressIsValid}
-        />
-        <label for="nameInputField">Address</label>
-    </div>
+<!-- thingy start -->
 
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.City}
-            type="text"
-            class="form-control"
-            class:is-invalid={cityIsValid}
-        />
-        <label for="nameInputField">City</label>
+<ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button
+            class="nav-link active"
+            id="edit-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#edit"
+            type="button"
+            role="tab"
+            aria-controls="edit"
+            aria-selected="true">History</button
+        >
+    </li>
+    <li class="nav-item" role="presentation">
+        <button
+            class="nav-link "
+            id="invoice-items-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#invoice-items"
+            type="button"
+            role="tab"
+            aria-controls="invoice-items"
+            aria-selected="false"
+            >Edit
+        </button>
+    </li>
+</ul>
+
+<!-- table -->
+<div class="tab-content " id="myTabContent">
+    <div
+        class="tab-pane fade show active p-5"
+        id="edit"
+        role="tabpanel"
+        aria-labelledby="edit-tab"
+    >
+        <h1>Display Customer History</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Id</td>
+                    <td>Date</td>
+                    <td>Total</td>
+                    <td># of items</td>
+                    <td>Unit Price</td>
+                    <td>Quantity</td>
+                    <td>Name</td>
+                </tr>
+            </thead>
+            <tbody>
+                {#each customer.invoices as invoice (`${invoice.InvoiceId}_${invoice.InvoiceDate}`)}
+                    <tr>
+                        <th>{invoice.InvoiceId}</th>
+                        <th>{invoice.InvoiceDate}</th>
+                        <th>{invoice.Total}</th>
+                        <th>{invoice.invoice_items.length}</th>
+                        <th colspan="3">Invoice Items </th>
+                    </tr>
+
+                    {#each invoice.invoice_items as item, idx (`${item.InvoiceLineId}_${item.InvoiceId}`)}
+                        <tr>
+                            <td colspan="3" />
+                            <td>{idx + 1} </td>
+                            <td>{item.UnitPrice}</td>
+                            <td>{item.Count}</td>
+                            <td>{item.Name}</td>
+                        </tr>
+                    {/each}
+                {/each}
+            </tbody>
+        </table>
     </div>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.State}
-            type="text"
-            class="form-control"
-            class:is-invalid={stateIsValid}
-        />
-        <label for="nameInputField">State</label>
+    <div
+        class="tab-pane fade p-5"
+        id="invoice-items"
+        role="tabpanel"
+        aria-labelledby="invoice-items-tab"
+    >
+        <h1>
+            Edit {customer.FirstName}
+            {customer.LastName}
+        </h1>
+        <!-- Form -->
+        <form class="form-floating" on:submit|preventDefault={handleSubmit}>
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.FirstName}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={firstNameIsValid}
+                    id="firstNameInputField"
+                    placeholder="John"
+                />
+                <label for="nameInputField">First Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.LastName}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={lastNameIsValid}
+                    id="LastNameInputField"
+                    placeholder="doe"
+                />
+                <label for="nameInputField">Last Name</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.Company}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={companyIsValid}
+                />
+                <label for="nameInputField">Company</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.Address}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={addressIsValid}
+                />
+                <label for="nameInputField">Address</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.City}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={cityIsValid}
+                />
+                <label for="nameInputField">City</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.State}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={stateIsValid}
+                />
+                <label for="nameInputField">State</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.Country}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={countryIsValid}
+                />
+                <label for="nameInputField">Country</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.PostalCode}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={postalCodeIsValid}
+                />
+                <label for="nameInputField">Postal Code</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.Phone}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={phoneIsValid}
+                />
+                <label for="nameInputField">Phone </label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.Fax}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={faxIsValid}
+                />
+                <label for="nameInputField">Fax </label>
+            </div>
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.Email}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={emailIsValid}
+                />
+                <label for="nameInputField">Email </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
     </div>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.Country}
-            type="text"
-            class="form-control"
-            class:is-invalid={countryIsValid}
-        />
-        <label for="nameInputField">Country</label>
-    </div>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.PostalCode}
-            type="text"
-            class="form-control"
-            class:is-invalid={postalCodeIsValid}
-        />
-        <label for="nameInputField">Postal Code</label>
-    </div>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.Phone}
-            type="text"
-            class="form-control"
-            class:is-invalid={phoneIsValid}
-        />
-        <label for="nameInputField">Phone </label>
-    </div>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.Fax}
-            type="text"
-            class="form-control"
-            class:is-invalid={faxIsValid}
-        />
-        <label for="nameInputField">Fax </label>
-    </div>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.Email}
-            type="text"
-            class="form-control"
-            class:is-invalid={emailIsValid}
-        />
-        <label for="nameInputField">Email </label>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <a class="btn btn-dark" href={`/admin/customers`}>Back</a>
-</form>
+</div>
+
+<style>
+    .widget.widget-stats {
+        position: relative;
+        color: #fff;
+        padding: 0.9375rem;
+        border-radius: 4px;
+    }
+    .widget {
+        overflow: hidden;
+        margin-bottom: 20px;
+        background: #fff;
+        color: inherit;
+        padding: 0;
+    }
+    .bg-blue {
+        background-color: #348fe2 !important;
+    }
+</style>

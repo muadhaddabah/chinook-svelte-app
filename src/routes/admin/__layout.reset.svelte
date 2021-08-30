@@ -1,6 +1,8 @@
 <script>
     import { page } from "$app/stores";
 
+    import Sidebar from "../../lib/components/Sidebar.svelte";
+
     const navItems = [
         {
             label: "Home",
@@ -47,8 +49,8 @@
 </script>
 
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark g-col-6">
+        <div class="container-fluid grid">
             <a class="navbar-brand" href="/">Carousel</a>
             <button
                 class="navbar-toggler"
@@ -77,6 +79,7 @@
             </div>
         </div>
     </nav>
+    <!-- <Sidebar /> -->
 </header>
 
 <main class="container">
@@ -85,6 +88,6 @@
 
 <style>
     main {
-        padding: 100px 50px;
+        padding: 100px 0px;
     }
 </style>
