@@ -4,7 +4,7 @@
 
     let albums = [];
     const getAlbums = async () => {
-        const res = await fetch(`${API_URL}/albums`);
+        const res = await fetch(`${API_URL}/albums/sz`);
         const json = await res.json();
         albums = json.data;
     };
@@ -35,18 +35,18 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <td>AlbumId</td>
             <td>Title</td>
             <td>ArtistId</td>
+            <td>Total Sales</td>
             <td>Actions</td>
         </tr>
     </thead>
     <tbody>
-        {#each albums as album (album.AlbumId)}
+        {#each albums as album (`${album.AlbumId}_${album.Track.AlbumId}`)}
             <tr>
-                <td>{album.AlbumId}</td>
                 <td>{album.Title}</td>
                 <td>{album.ArtistId}</td>
+                <td>{Math.round(album.totalSales * 100) / 100}</td>
                 <td
                     ><a
                         href={`/admin/albums/${album.AlbumId}`}

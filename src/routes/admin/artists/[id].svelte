@@ -30,7 +30,7 @@
 </script>
 
 <script>
-    export let artist;
+    export let artist = [];
     let data = { Name: artist.Name };
     let albumCount = artist.Albums.length || 0;
     let trackCount = artist.Albums.reduce(
@@ -126,7 +126,12 @@
         <div class="widget widget-stats bg-blue">
             <div class="stats-info">
                 <h4>TOTAL SALES</h4>
-                <h5>$16.53</h5>
+                <!-- {#each artist as artist (`${artist.ArtistId}_${artist.Album.AlbumId}`)}
+                    <h5>
+                        $
+                        {Math.round(artist.totalSales * 100) / 100}
+                    </h5>
+                {/each} -->
             </div>
         </div>
     </div>

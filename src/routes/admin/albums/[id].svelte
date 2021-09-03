@@ -84,20 +84,86 @@
     );
 </script>
 
-<h1>ArtistId: {album.ArtistId}</h1>
-<h1>Title: {album.Title}</h1>
+<h1>{album.AlbumId}: {album.Title}</h1>
 
-<form class="form-floating" on:submit|preventDefault={handleSubmit}>
-    <div class="form-floating mb-3">
-        <input
-            bind:value={data.Title}
-            type="text"
-            class="form-control"
-            class:is-invalid={titleIsValid}
-            id="titleInputField"
-            placeholder="Title"
-        />
-        <label for="titleInputField">Title</label>
+<!-- start -->
+<ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button
+            class="nav-link active"
+            id="edit-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#edit"
+            type="button"
+            role="tab"
+            aria-controls="edit"
+            aria-selected="true">Tracks</button
+        >
+    </li>
+    <li class="nav-item" role="presentation">
+        <button
+            class="nav-link "
+            id="invoice-items-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#invoice-items"
+            type="button"
+            role="tab"
+            aria-controls="invoice-items"
+            aria-selected="false">Edit</button
+        >
+    </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+    <div
+        class="tab-pane fade show active p-5"
+        id="edit"
+        role="tabpanel"
+        aria-labelledby="edit-tab"
+    >
+        <div class="row gy-5">
+            <!--  -->
+            <div class="col">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {album.Title}
+                        </h5>
+                        <ul class="list-group list-group-flush">
+                            {#each album.Tracks as track (`${track.AlbumId}_${track.TrackId}`)}
+                                <li class="list-group-item">
+                                    {track.Name}
+                                </li>
+                            {/each}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- <p>../</p> -->
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+    <div
+        class="tab-pane fade"
+        id="invoice-items"
+        role="tabpanel"
+        aria-labelledby="invoice-items-tab"
+    >
+        <form
+            class="form-floating mt-4"
+            on:submit|preventDefault={handleSubmit}
+        >
+            <div class="form-floating mb-3">
+                <input
+                    bind:value={data.Title}
+                    type="text"
+                    class="form-control"
+                    class:is-invalid={titleIsValid}
+                    id="titleInputField"
+                    placeholder="Title"
+                />
+                <label for="titleInputField">Title</label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+<!-- end -->

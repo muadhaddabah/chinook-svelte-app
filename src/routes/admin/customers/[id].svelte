@@ -58,6 +58,10 @@
     };
     $: console.log("🚀 ~ file: [id].svelte ~ line 59 ~ data", data);
 
+    $: totalSpent =
+        Math.round(customer.invoices.reduce((a, b) => a + b.Total, 0) * 100) /
+        100;
+
     let errors = {
         FirstName: [],
         LastName: [],
@@ -135,8 +139,10 @@
     <div class="col-xl-3 col-md-6">
         <div class="widget widget-stats bg-blue">
             <div class="stats-info">
-                <h4>Company</h4>
-                <strong>{customer.Company}</strong><br />
+                {#if customer.Company}
+                    <h4>Company</h4>
+                    <strong>{customer.Company}</strong><br />
+                {/if}
                 <strong>Email: {customer.Email}</strong>
             </div>
         </div>
@@ -146,7 +152,9 @@
             <div class="stats-info">
                 <h4>Phone</h4>
                 <h5>{customer.Phone}</h5>
-                <h5>Fax:{customer.Fax}</h5>
+                {#if customer.Fax}
+                    <h5>Fax:{customer.Fax}</h5>
+                {/if}
             </div>
         </div>
     </div>
@@ -154,7 +162,7 @@
         <div class="widget widget-stats bg-blue">
             <div class="stats-info">
                 <h4>TOTAL SPENT</h4>
-                <h5>$16.83</h5>
+                <h5>${totalSpent}</h5>
             </div>
         </div>
     </div>
@@ -198,7 +206,7 @@
         role="tabpanel"
         aria-labelledby="edit-tab"
     >
-        <h1>Display Customer History</h1>
+        <h1>{customer.FirstName} {customer.LastName} History</h1>
         <table class="table table-striped">
             <thead>
                 <tr>

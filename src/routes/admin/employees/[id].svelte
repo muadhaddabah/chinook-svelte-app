@@ -147,14 +147,6 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-3 col-md-6">
-        <div class="widget widget-stats bg-blue">
-            <div class="stats-info">
-                <h4>TOTAL CUSTOMERS</h4>
-                <h5>need to be added</h5>
-            </div>
-        </div>
-    </div>
 </div>
 
 <!-- start -->
@@ -186,7 +178,9 @@
         </button>
     </li>
 </ul>
+
 <!-- table -->
+
 <div class="tab-content " id="myTabContent">
     <div
         class="tab-pane fade show active p-5"
@@ -194,29 +188,33 @@
         role="tabpanel"
         aria-labelledby="edit-tab"
     >
-        <h1>{employee.FirstName} {employee.LastName} Customers</h1>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <td>CustomerId</td>
-                    <td>FirstName</td>
-                    <td>LastName</td>
-                    <td>Phone</td>
-                    <td>SuppportRepId</td>
-                </tr>
-            </thead>
-            <tbody>
-                {#each employee.Customers as customer (`${customer.CustomerId}_${customer.FirstName}`)}
+        {#if employee.Customers.length}
+            <h1>{employee.FirstName} {employee.LastName} Customers</h1>
+            <table class="table table-striped">
+                <thead>
                     <tr>
-                        <td>{customer.CustomerId}</td>
-                        <td>{customer.FirstName}</td>
-                        <td>{customer.LastName}</td>
-                        <td>{customer.Phone}</td>
-                        <td>{customer.SupportRepId}</td>
+                        <td>CustomerId</td>
+                        <td>FirstName</td>
+                        <td>LastName</td>
+                        <td>Phone</td>
+                        <td>SuppportRepId</td>
                     </tr>
-                {/each}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    {#each employee.Customers as customer (`${customer.CustomerId}_${customer.FirstName}`)}
+                        <tr>
+                            <td>{customer.CustomerId}</td>
+                            <td>{customer.FirstName}</td>
+                            <td>{customer.LastName}</td>
+                            <td>{customer.Phone}</td>
+                            <td>{customer.SupportRepId}</td>
+                        </tr>
+                    {/each}
+                </tbody>
+            </table>
+        {:else}
+            <h2>No Customers Found</h2>
+        {/if}
     </div>
     <div
         class="tab-pane fade p-5"
