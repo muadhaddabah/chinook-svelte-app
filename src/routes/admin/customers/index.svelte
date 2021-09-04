@@ -11,7 +11,7 @@
     onMount(getCustomers);
 </script>
 
-<h1>List of Customers (Table)</h1>
+<h1>List of Customers</h1>
 <table class="table table-striped">
     <thead>
         <tr>
